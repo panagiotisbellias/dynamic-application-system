@@ -22,16 +22,19 @@ class SuperVisor(SamplePersonModel):
         return f"Supervisor {super().__str__()}"
 
 class Citizen(SamplePersonModel):
+    job = models.TextField(default='unemployeed')
+
     def __str__(self):
-        return f"Citizen {super().__str__()}"
+        return f"Citizen {super().__str__()}, {self.job}"
 
 class PersonnelDepartment(models.Model):
     address = models.TextField()
 
     def __str__(self):
-        return f"Personnel department {super().__str__()} with address {self.address}"
+        return f"Personnel department with address {self.address}"
 
 class Application(models.Model):
+    id = models.AutoField(primary_key=True)
     pub_date = models.DateField()
     headline = models.CharField(max_length=200)
     content = models.TextField()
