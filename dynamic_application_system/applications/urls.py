@@ -16,5 +16,7 @@ urlpatterns = [
     path('applications/approved', views.approved_applications, name='approved_applications'), # Personnel Department
 
     path('carriers/', views.choose_carrier, name='choose_carrier'), # Citizen
-    path('carriers/new/', views.new_carrier, name='new_carrier'),
+    path('carriers/new/', views.new_carrier, name='new_carrier'), # Manager
+    
+    path('about/', views.about, name='about'),
 ]
