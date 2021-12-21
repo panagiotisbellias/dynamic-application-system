@@ -5,7 +5,7 @@ class SamplePersonModel(models.Model):
     full_name = models.CharField(max_length=70)
 
     def __str__(self):
-        return self.full_name
+        return f"with full name {self.full_name}"
 
 class Manager(SamplePersonModel):
     def __str__(self):
@@ -35,9 +35,9 @@ class PersonnelDepartment(models.Model):
 
 class Application(models.Model):
     id = models.AutoField(primary_key=True)
-    pub_date = models.DateField()
+    pub_date = models.DateTimeField('date published')
     headline = models.CharField(max_length=200)
-    content = models.TextField()
+    content = models.CharField(max_length=200)
     citizen = models.ForeignKey(Citizen, on_delete=models.CASCADE)
 
     def __str__(self):

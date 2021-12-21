@@ -9,9 +9,8 @@ urlpatterns = [
     path('applications/<int:application_id>/', views.detail, name='detail'),
     path('applications/<int:application_id>/approve', views.approve, name='approve'),
     path('applications/<int:application_id>/decline', views.decline, name='decline'),
-    
+    path('applications/<int:application_id>/delete', views.delete, name='delete'),    
     path('applications/new/', views.new_application, name='new_application'),
-    path('applications/<int:application_id>/delete', views.delete, name='delete'),
     path('applications/statistics', views.application_stats, name='statistics'),
     path('applications/approved', views.approved_applications, name='approved_applications'), # Personnel Department
 
