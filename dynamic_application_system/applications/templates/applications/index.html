@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
-{% if latest_applications_list %}
-    <ul>
-    {% for application in latest_applications_list %}
-        <li><a href="/applications/{{ application.id }}/">{{ application.content }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No applications are available.</p>
-{% endif %}
+{% block content %}
+    {% if latest_applications_list %}
+        <ul>
+        {% for application in latest_applications_list %}
+        <li><a href="{% url 'applications:detail' application.id %}">{{ application.content }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No applications are available.</p>
+    {% endif %}
+{% endblock %}

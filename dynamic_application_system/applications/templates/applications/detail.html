@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <fieldset>
+        <legend><h1>{{ application.headline }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <ul>
+            <li>ID: {{ application.id }}</li>
+            <li>Date published: {{ application.pub_date }}</li>
+            <li>Headline: {{ application.headline }}</li>
+            <li>Content: {{ application.content }}</li>
+            <li>Citizen's Full Name: {{ application.citizen.full_name }}</li>
+            <li>Citizen's job: {{ application.citizen.job }}</li>
+        </ul>
+    </fieldset>
+    <form action="{% url 'applications:approve' application.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" name="btn" id="0" value="Approve">
+    </form>
+    <form action="{% url 'applications:decline' application.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" name="btn" id="1" value="Decline">
+    </form>
+{% endblock %}

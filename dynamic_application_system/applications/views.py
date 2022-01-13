@@ -1,20 +1,32 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+from django.shortcuts import get_object_or_404, render
+from django.template import loader
+from django.views import generic
+from django.views.generic.base import View
 from .models import Application
 
 # Panagiotis Bellias
 def home(request):
     return render(request, 'applications/home.html')
 
-def index(request):
-    latest_applications_list = Application.objects.order_by('-pub_date')[:5]
-    output = ', '.join([a.content for a in latest_applications_list])
-    return HttpResponse(output)
+class IndexView(generic.ListView):
+    template_name = 'applications/index.html'
+    context_object_name = 'latest_applications_list'
+
+    def get_queryset(self):
+        """Return the last five published applications."""
+        return Application.objects.order_by('-pub_date')[:5]
 
 def detail(request, application_id):
-    return HttpResponse("You're looking at application %s." % application_id)
+    application = get_object_or_404(Application, pk=application_id)
+    return render(request, 'applications/detail.html', {'application': application})
+
+# class DetailView(generic.DetailView):
+#     model = Application
+#     template_name = 'applications/detail.html'
 
 def approve(request, application_id):
+    application = get_object_or_404(Application, pk=application_id)
     return HttpResponse("You're approving application %s." % application_id)
 
 def decline(request, application_id):
