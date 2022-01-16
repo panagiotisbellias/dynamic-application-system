@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="{% url 'applications:new_application' %}" method="post">
+        {% csrf_token %}
+        {{ form|linebreaks }}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

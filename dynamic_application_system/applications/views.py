@@ -1,9 +1,10 @@
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.views import generic
 from django.views.generic.base import View
 from .models import Application
+from .forms import ApplicationForm
 
 # Panagiotis Bellias
 def home(request):
@@ -36,7 +37,22 @@ def delete(request, application_id):
     return HttpResponse("You're deleting application %s." % application_id)
 
 def new_application(request):
-    return HttpResponse("Hello, world. You're at the applications new_application.")
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = ApplicationForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponse("GREAT!")
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ApplicationForm()
+
+    return render(request, 'applications/new_application.html', {'form': form})
 
 def application_stats(request):
     return HttpResponse("Hello, world. You're at the applications application_stats.")
