@@ -3,8 +3,10 @@ from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.views import generic
 from django.views.generic.base import View
-from .models import Application
+from .models import Application, Citizen
 from .forms import ApplicationForm
+
+import datetime
 
 # Panagiotis Bellias
 def home(request):
@@ -36,6 +38,19 @@ def decline(request, application_id):
 def delete(request, application_id):
     return HttpResponse("You're deleting application %s." % application_id)
 
+def gen_id(entity_type):
+    id = 1
+    if entity_type == "Application":
+        application_set = Application.objects.all()
+        for application in application_set.iterator():
+            temp_id = application.id
+            if id != temp_id:
+                return id
+        return temp_id + 1
+    else:
+        id = -1
+    return id
+
 def new_application(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -44,9 +59,20 @@ def new_application(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            # ...
+            your_name = form.cleaned_data['your_name']
+            your_job = form.cleaned_data['your_job']
+            headline = form.cleaned_data['headline']
+            content = form.cleaned_data['content']
+            
+            c_id = gen_id("Citizen")
+            a_id = gen_id("Application")
+            if c_id != -1 and a_id != -1:
+                citizen = Citizen(c_id, your_name, your_job)
+                citizen.save()
+                application = Application(a_id, datetime.datetime.now(), headline, content, citizen)
+                application.save()
             # redirect to a new URL:
-            return HttpResponse("GREAT!")
+            return render(request, 'applications/index.html')
 
     # if a GET (or any other method) we'll create a blank form
     else:
