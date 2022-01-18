@@ -1,6 +1,7 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
+from django.urls import reverse
 from django.views import generic
 from django.views.generic.base import View
 from .models import Application, Citizen
@@ -42,14 +43,22 @@ def gen_id(entity_type):
     id = 1
     if entity_type == "Application":
         application_set = Application.objects.all()
+        print(application_set)
+        print(application_set.iterator())
         for application in application_set.iterator():
             temp_id = application.id
             if id != temp_id:
                 return id
         return temp_id + 1
     else:
-        id = -1
-    return id
+        citizen_set = Citizen.objects.all()
+        print(citizen_set)
+        print(citizen_set.iterator())
+        for citizen in citizen_set.iterator():
+            temp_id = citizen.id
+            if id != temp_id:
+                return id
+        return temp_id + 1
 
 def new_application(request):
     # if this is a POST request we need to process the form data
@@ -63,16 +72,22 @@ def new_application(request):
             your_job = form.cleaned_data['your_job']
             headline = form.cleaned_data['headline']
             content = form.cleaned_data['content']
+
+            print(f"ATTENTION! {your_name},{your_job},{headline},{content}")
             
             c_id = gen_id("Citizen")
+            print(c_id)
             a_id = gen_id("Application")
+            print(a_id)
             if c_id != -1 and a_id != -1:
                 citizen = Citizen(c_id, your_name, your_job)
+                citizen.is_active = True
                 citizen.save()
                 application = Application(a_id, datetime.datetime.now(), headline, content, citizen)
+                application.is_active = True
                 application.save()
             # redirect to a new URL:
-            return render(request, 'applications/index.html')
+            return HttpResponseRedirect(reverse('applications:index'))
 
     # if a GET (or any other method) we'll create a blank form
     else:
