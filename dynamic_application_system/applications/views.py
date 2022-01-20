@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.template import loader
@@ -25,12 +26,18 @@ def detail(request, application_id):
     application = get_object_or_404(Application, pk=application_id)
     return render(request, 'applications/detail.html', {'application': application})
 
-# class DetailView(generic.DetailView):
-#     model = Application
-#     template_name = 'applications/detail.html'
-
 def approve(request, application_id):
     application = get_object_or_404(Application, pk=application_id)
+    # Approve Logic
+    '''
+    send_mail(
+        'Your application is approved!',
+        'Dear user, your application has been approved\nThank you for using this service\nHave a great day!',
+        'belliaspanagiotis@gmail.com',
+        ['belliaspan@gmail.com'], # Testing
+        auth_password='password',
+        fail_silently=False,
+    )'''
     return HttpResponse("You're approving application %s." % application_id)
 
 def decline(request, application_id):
