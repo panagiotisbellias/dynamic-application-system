@@ -126,6 +126,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGIN_URL = 'keycloak_login'
 
+KEYCLOAK_OIDC_PROFILE_MODEL = 'django_keycloak.OpenIdConnectProfile'
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
