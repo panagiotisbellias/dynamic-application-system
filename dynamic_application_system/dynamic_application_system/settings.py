@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_keycloak.apps.KeycloakAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +67,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django_keycloak.middleware.BaseKeycloakMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django_keycloak.auth.backends.KeycloakAuthorizationCodeBackend',
 ]
 
 ROOT_URLCONF = 'dynamic_application_system.urls'
@@ -118,6 +124,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+<<<<<<< HEAD
+=======
+LOGIN_URL = 'keycloak_login'
+
+KEYCLOAK_OIDC_PROFILE_MODEL = 'django_keycloak.OpenIdConnectProfile'
+
+>>>>>>> 20a6a762b6a3c379e3e46e34f62555d95f3865f9
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
