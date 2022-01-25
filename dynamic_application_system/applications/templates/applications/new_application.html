@@ -3,7 +3,33 @@
 {% block content %}
     <form action="{% url 'applications:new_application' %}" method="post">
         {% csrf_token %}
-        {{ form|linebreaks }}
+        {{ form }}
         <input type="submit" value="Submit">
     </form>
+
+    <script type="text/javascript">
+        $('.content-list-new').on('input', function() {
+            let $this = $(this)
+            let $clone = $this.clone()
+            let name = $clone.attr('name')
+            let n = parseInt(name.split('_')[1]) + 1
+            name = 'content_' + n
+            $clone.val('')
+            $clone.attr('name', name)
+            $clone.appendTo($this.parent())
+            $this.removeClass('content-list-new')
+            $this.off('input', arguments.callee)
+            $clone.on('input', arguments.callee)
+        })
+
+        $form.find("input[name^=interest_]:not(.content-list-new)")
+            .on("blur", function() {
+                var value = $(this).val();
+                if (value === "") {
+                    $(this).hide();
+                }
+            })
+    </script>
+    
+
 {% endblock %}

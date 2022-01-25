@@ -3,8 +3,14 @@ from django import forms
 # dynamic 5
 from .models import Application, ApplicationContent
 
+
+
 # dynamic 2
 class ApplicationForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields = '__all__'
+
     your_name = forms.CharField(label='Your name', max_length=100,required=True)
     your_job = forms.CharField(label='Your job', max_length=400,required=True)
     headline = forms.CharField(label='Headline', max_length=200,required=True)
@@ -59,3 +65,8 @@ class ApplicationForm(forms.ModelForm):
             ApplicationContent.objects.create(
                 application=application, content=content
             )
+
+    def get_content_fields(self):
+        for field_name in self.fields:
+            if field_name.startswith('content_'):
+                yield self[field_name]

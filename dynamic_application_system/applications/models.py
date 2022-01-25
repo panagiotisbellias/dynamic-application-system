@@ -45,5 +45,5 @@ class Application(models.Model):
 
 # dynamic 3
 class ApplicationContent(models.Model):
-    application = models.ForeignKey(Application)
-    content = models.CharField()
+    application = models.ForeignKey(Application,on_delete=models.CASCADE)
+    content = models.CharField(max_length=200)

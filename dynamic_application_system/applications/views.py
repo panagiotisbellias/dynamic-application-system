@@ -78,7 +78,9 @@ def new_application(request):
             your_name = form.cleaned_data['your_name']
             your_job = form.cleaned_data['your_job']
             headline = form.cleaned_data['headline']
-            content = form.cleaned_data['content']
+
+            for content_field in form.get_content_fields():
+                print(content_field.get_value())
 
             print(f"ATTENTION! {your_name},{your_job},{headline},{content}")
             
