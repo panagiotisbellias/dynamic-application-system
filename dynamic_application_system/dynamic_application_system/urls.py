@@ -16,8 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
+from applications import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/login', views.login, name='login'),
+    path('accounts/signup/', views.SignUpView.as_view(), name='signup'),
+    path('accounts/signup/citizen', views.signup_citizen, name='citizen_signup'),
     path('', include('applications.urls')),
 ]

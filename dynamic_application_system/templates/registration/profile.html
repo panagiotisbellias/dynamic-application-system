@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    {% extends 'base.html' %}
+	<head>
+		<title>
+            {% block title %}
+                Your Profile
+            {% endblock %}
+        </title>
+	</head>
+	<body>
+        {% block body_block %}
+
+        <div class="row">
+            <div class="col-md-8 col-sm-10 col-12">
+                <h1>Your Profile</h1>
+
+                {% if error_message %}
+                <p><strong>{{ error_message }}</strong></p>
+                {% endif %}
+
+                {% if user %}
+                <form action="{% url 'profile' %}" method="put">
+                    {% csrf_token %}
+                    <table border="2">
+                        <tr> <th>Username</th><th> <input type="text" name="data.username" value="{{user.username}}"/></th> </tr>
+                        <tr> <th>Full Name</th><th> <input type="text" name="data.fullName" value="{{user.fullName}}"/></th> </tr>
+                        <tr> <th>Email Address</th><th> <input type="text" name="data.email" value="{{user.email}}"/></th> </tr>
+                        {% if user.school %}
+                        <tr> <th>School</th><th> <input type="text" name="data.school" value="{{data.school}}"/></th> </tr>
+                        {% endif %}
+                        {% if data.uniId %}
+                        <tr> <th>University ID</th><th> <input type="text" name="data.uniId" value="{{data.uniId}}"/></th> </tr>
+                        {% endif %}
+                        {% if data.urlGradingFile %}
+                        <tr> <th>URL Grading File</th><th> <input type="text" name="data.urlGradingFile" value="{{data.urlGradingFile}}"/></th> </tr>
+                        {% endif %}
+                        {% if data.courses %} 
+                        <tr> <th>Courses</th><th> <input type="text" name="data.courses" value="{{data.courses}}"/></th> </tr>
+                        {% endif %}
+                        {% if data.certificates %}
+                        <tr> <th>Certificates</th><th> <input type="text" name="data.certificates" value="{{data.certificates}}"/></th> </tr>
+                        {% endif %}
+                        <tr>
+                            <th>
+                                Did you made changes above? Update your profile now pressing 
+                            </th>
+                            <th>
+                                <input type="submit" value="here"/>
+                            </th>
+                        </tr> 
+                </form>
+
+                <form action="{% url 'profile' %}" method="DELETE">
+                    {% csrf_token %}
+                    <table>
+                        <tr>
+                            <th>
+                                Do you want to delete your account? This can't be undone
+                            </th>
+                        </tr>  
+                        <tr>
+                            <th>
+                                <input type="submit" value="Yes, Delete It!"/>
+                            </th>
+                        </tr>  
+                    </table>
+                </form>
+                {% endif %}
+
+            </div>
+        </div>
+        {% endblock %}
+	</body>
+</html>

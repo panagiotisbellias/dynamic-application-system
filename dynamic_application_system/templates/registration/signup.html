@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  {% extends 'base.html' %}
+  <head>
+    <title>
+      {% block title %}
+         Sign Up
+      {% endblock %}
+    </title>
+    {% load static %}
+  </head>
+  <body>
+    {% block body_block %}
+      <h2>Sign up for a free account</h2>
+      <p class="lead">Select below the type of account you want to create</p>
+      <a href="{% url 'citizen_signup' %}" role="button">I'm a citizen</a>
+      <a href="{% url '' %}" role="button">!! Not supported yet !!</a>
+    {% endblock %}
+  </body>
+</html>

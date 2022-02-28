@@ -4,7 +4,7 @@
     {% if latest_applications_list %}
         <ul>
         {% for application in latest_applications_list %}
-        <li><a href="{% url 'applications:detail' application.id %}">{{ application.content }}</a></li>
+        <li ><a style="color: green" href="{% url 'applications:detail' application.id %}">{{ application.headline }}</a></li>
         {% endfor %}
         </ul>
     {% else %}

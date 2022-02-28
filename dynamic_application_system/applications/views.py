@@ -8,11 +8,22 @@ from django.views.generic.base import View
 from .models import Application, Citizen
 from .forms import ApplicationForm
 
+from django.views.generic import TemplateView
+
 import datetime
 
 # Panagiotis Bellias
 def home(request):
     return render(request, 'applications/home.html')
+
+def login(request):
+    pass
+
+def signup_citizen(request):
+    pass
+
+class SignUpView(TemplateView):
+    template_name = 'registration/signup.html'
 
 class IndexView(generic.ListView):
     template_name = 'applications/index.html'

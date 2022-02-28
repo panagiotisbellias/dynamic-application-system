@@ -1,12 +1,62 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}{% endblock %}</title>
+        <link href="https://fonts.googleapis.com/css?family=Clicker+Script" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" type="text/css" href="{% static 'applications/style.css' %}"> -->
+    </head>
+    <body>
+        <img src="{% static 'images/sitelogo.jpg' %}" alt="Logo"><br/><br/>
+        <div>
+            <div>
+                <div>
+                    <div>
+                        <h1>
+                            <a href="{% url 'applications:home' %}">
+                                Reference Letter App 
+                            </a>
+                        </h1>
+                    </div>
+                    <div>
+                        <p></p>
+                        <!-- {% if user.username %} 
+                            <p class="pt-3">Logged in as <strong>{{ user.username }}</strong>. <a href="{% url 'logout' %}">Log out</a></p>
+                            <a href="{% url 'profile' %}" class="btn btn-primary" role="button">Profile</a> -->
+                        <!-- {% else %} -->
+                            <a href="{% url 'login' %}" role="button">Log in</a>
+                            <a href="{% url 'signup' %}"role="button">Sign up</a>
+                        <!-- {% endif %} -->
+                    </div>
+                </div>
+            
+                <div>
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% block content %}{% endblock %}
+            </div>
 
-<html>
-<head>
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'applications/style.css' %}">
-</head>
-<body>
-    <img src="{% static 'images/sitelogo.jpg' %}" alt="Logo"><br/><br/>
-    {% block content %}{% endblock %}
-</body>
+            <footer>
+            <a href="https://www.hua.gr/index.php/en/">Harokopio University</a>
+            /
+            <a href="https://www.dit.hua.gr/index.php/en/">Department of Informatics and Telematics</a>
+            /
+            <a href="https://github.com/panagiotisbellias/dynamic-application-system.git">GitHub repository</a>
+            /
+            <a href="https://github.com/sibtc/django-multiple-user-types-example">Ideas & code taken by vitorfs project</a>
+            /
+            <a href="{% url 'applications:about' %}">App Documentation</a>
+            </footer>
+        </div>
+    </body>
 </html>
